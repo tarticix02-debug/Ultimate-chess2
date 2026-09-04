@@ -1,0 +1,27 @@
+name: Extract ZIP File
+
+on:
+  push:
+    paths:
+      - 'UltimateChess_Final.zip'
+  workflow_dispatch:
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Extract ZIP
+        run: |
+          unzip -o UltimateChess_Final.zip -d .
+          rm UltimateChess_Final.zip
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "UltimateChess_Final.zip içeriği klasörlere çıkarıldı" || exit 0
+          git push
